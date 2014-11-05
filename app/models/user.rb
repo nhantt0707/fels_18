@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   attr_accessor :not_validate_password,:remember_token
-  before_create :create_remember_token
   before_save {self.email = email.downcase}
   validates :name,  presence: true, length: {maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -25,7 +24,9 @@ class User < ActiveRecord::Base
   # Remembers a user in the database for use in persistent sessions.
   def remember
     self.remember_token = User.new_token
+    self.not_validate_password = true
     update_attributes(remember_digest: User.digest(remember_token))
+    self.not_validate_password = false
   end
 
   # Returns true if the given token matches the digest.
@@ -37,12 +38,8 @@ class User < ActiveRecord::Base
   # Forgets a user.
   def forget
     self.not_validate_password = true
-    update_attributes!(remember_digest: nil)
+    update_attributes(remember_digest: nil)
     self.not_validate_password = false
   end
-  private
 
-    def create_remember_token
-      self.remember_token = User.digest(User.new_remember_token)
-    end  
 end
