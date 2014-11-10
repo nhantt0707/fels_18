@@ -1,12 +1,20 @@
-
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
-
-
   def index
-    @users = User.paginate page: params[:page]
+    if params[:follow_type] == "following"
+      @user  = User.find params[:id]
+      @users = @user.following.paginate page: params[:page]
+      render "show_follow"
+    else if params[:follow_type] == "followers"
+        @user  = User.find params[:id]
+        @users = @user.followers.paginate page: params[:page]
+        render "show_follow"
+      else
+        @users = User.paginate page: params[:page]
+      end
+    end
   end
 
   def show
@@ -50,8 +58,8 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-    end
+  def user_params
+    params.require(:user).permit(:name, :email, :password,
+    :password_confirmation)
+  end
 end

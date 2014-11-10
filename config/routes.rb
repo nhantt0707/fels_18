@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get    "login"   => "sessions#new"
   post   "login"   => "sessions#create"
   delete "logout"  => "sessions#destroy"
-  resources :users
+  resources :users 
+  resources :relationships, only: [:create, :destroy]
+  match "/users/:id/:follow_type", as: "follow_user", to: "users#index", via: "get"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
