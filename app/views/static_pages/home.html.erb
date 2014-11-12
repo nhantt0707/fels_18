@@ -1,5 +1,14 @@
-<div class="center jumbotron">
-
-  <%= link_to "Words", "#", class: "btn btn-lg btn-primary" %>
-  <%= link_to "Lesson", "#", class: "btn btn-lg btn-primary" %>
-</div>
+<% if logged_in? %>
+	<div class="row">
+		<aside class="col-md-4">
+			<section class="stats">
+				<%= render "shared/stats" %>
+			</section>
+		</aside>
+	</div>
+<% else %>
+	<div class="center jumbotron">
+		<%= link_to "Words", "#", class: "btn btn-lg btn-primary" %>
+		<%= link_to "Lesson", "#", class: "btn btn-lg btn-primary" %>
+	</div>
+<% end %>
