@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post   "login"   => "sessions#create"
   delete "logout"  => "sessions#destroy"
   resources :users 
+  resources :words
   resources :relationships, only: [:create, :destroy]
   match "/users/:id/:follow_type", as: "follow_user", to: "users#index", via: "get"
 

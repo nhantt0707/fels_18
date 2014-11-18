@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105085511) do
+ActiveRecord::Schema.define(version: 20141112091833) do
+
+  create_table "answers", force: true do |t|
+    t.string   "content"
+    t.boolean  "correct"
+    t.integer  "word_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["word_id"], name: "index_answers_on_word_id", using: :btree
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -35,5 +51,14 @@ ActiveRecord::Schema.define(version: 20141105085511) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+
+  create_table "words", force: true do |t|
+    t.string   "english"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "words", ["category_id"], name: "index_words_on_category_id", using: :btree
 
 end
