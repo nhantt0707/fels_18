@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112091833) do
+ActiveRecord::Schema.define(version: 20141117070621) do
 
   create_table "answers", force: true do |t|
     t.string   "content"
@@ -28,6 +28,29 @@ ActiveRecord::Schema.define(version: 20141112091833) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "lesson_words", force: true do |t|
+    t.integer  "lesson_id"
+    t.integer  "word_id"
+    t.integer  "answer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lesson_words", ["answer_id"], name: "index_lesson_words_on_answer_id", using: :btree
+  add_index "lesson_words", ["lesson_id"], name: "index_lesson_words_on_lesson_id", using: :btree
+  add_index "lesson_words", ["word_id"], name: "index_lesson_words_on_word_id", using: :btree
+
+  create_table "lessons", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lessons", ["category_id"], name: "index_lessons_on_category_id", using: :btree
+  add_index "lessons", ["user_id"], name: "index_lessons_on_user_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
