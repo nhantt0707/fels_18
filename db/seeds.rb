@@ -49,3 +49,46 @@ end
                    word_id: word_id)
   end
 end
+
+5.times do |n|
+  name = Faker::Lorem.sentence
+  category_id = 1;
+  user_id = 1;
+  Lesson.create!(name: name,
+                 category_id: category_id,
+                 user_id: user_id)
+end
+5.times do |n|
+  name = Faker::Lorem.sentence
+  category_id = 2;
+  user_id = 1;
+  Lesson.create!(name: name,
+                 category_id: category_id,
+                 user_id: user_id)
+end
+
+3.times do |n|
+  lesson_id = 1;
+  word_id = n + 1;
+  answer_id = (n + 1) * 4;
+  LessonWord.create!(lesson_id: lesson_id,
+                     word_id: word_id,
+                     answer_id: answer_id)
+end
+3.times do |n|
+  lesson_id = 2;
+  word_id = n + 1 + 3;
+  answer_id = (n + 1) * 4;
+  LessonWord.create!(lesson_id: lesson_id,
+                     word_id: word_id,
+                     answer_id: answer_id)
+end
+10.times do |n|
+  lesson_id = 2;
+  word_id = n + 11;
+  answer_id = (n + 11) * 4;
+  LessonWord.create!(lesson_id: lesson_id,
+                     word_id: word_id,
+                     answer_id: answer_id)
+end  
+  
